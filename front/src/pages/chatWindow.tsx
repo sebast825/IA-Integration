@@ -2,16 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 import { useSendMessage } from "../hooks/useSendMessage";
 
-export type Message = {
-  id: string;
-  role: "user" | "assistant";
-  text: string;
-  time?: string;
-};
-
 export default function ChatWindow() {
-  const { messages,isSending,sendMessage} = useSendMessage()
-
+  
+  const { messages, isSending, sendMessage } = useSendMessage();
   const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
@@ -19,11 +12,10 @@ export default function ChatWindow() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-
-  const handleSendMessage=() => {    
+  const handleSendMessage = () => {
     sendMessage(input);
     setInput("");
-  }
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
