@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
-import { useGenerate } from "../hooks/useGenerate";
+import { useSendMessage } from "../hooks/useSendMessage";
 
 export type Message = {
   id: string;
@@ -10,31 +10,9 @@ export type Message = {
 };
 
 export default function ChatWindow() {
-  const { postPromt } = useGenerate();
-
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "1",
-      role: "assistant",
-      text: "Hola — ¿en qué puedo ayudarte hoy?",
-      time: "11:00",
-    },
-    {
-      id: "2",
-      role: "user",
-      text: "Quiero crear una app con Vite + React + TS",
-      time: "11:01",
-    },
-    {
-      id: "3",
-      role: "assistant",
-      text: "Perfecto. Te dejo los pasos básicos cuando quieras.",
-      time: "11:02",
-    },
-  ]);
+  const { messages,isSending,sendMessage} = useSendMessage()
 
   const [input, setInput] = useState("");
-  const [isSending, setIsSending] = useState(false);
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -42,43 +20,16 @@ export default function ChatWindow() {
   }, [messages]);
 
 
-  const sendMessage = async () => {
-    const trimmed = input.trim();
-    if (!trimmed) return;
-    var rsta: string = (await postPromt(trimmed)) ?? "";
-    const newMsg: Message = {
-      id: String(Date.now()),
-      role: "user",
-      text: trimmed,
-      time: new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-    };
-
-    setMessages((m) => [...m, newMsg]);
+  const handleSendMessage=() => {    
+    sendMessage(input);
     setInput("");
-
-    setIsSending(true);
-    setTimeout(() => {
-      const reply: Message = {
-        id: String(Date.now() + 1),
-        role: "assistant",
-        text: rsta,
-        time: new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-      };
-      setMessages((m) => [...m, reply]);
-      setIsSending(false);
-    }, 650);
-  };
+  }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      sendMessage();
+      sendMessage(input);
+      setInput("");
     }
   };
 
@@ -130,7 +81,7 @@ export default function ChatWindow() {
           <Button
             variant="primary"
             disabled={isSending || !input.trim()}
-            onClick={sendMessage}
+            onClick={handleSendMessage}
           >
             {isSending ? "Enviando..." : "Enviar"}
           </Button>

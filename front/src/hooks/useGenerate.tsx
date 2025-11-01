@@ -9,11 +9,11 @@ export const  useGenerate = () => {
         message:prompt
     
       });
-      console.log('Login successful:', response.data);
+      console.log('Prompt Response:', response.data);
 
       return response.data.responseMessage
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error('Promt failed:', error);
     }
    }
 
