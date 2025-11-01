@@ -1,9 +1,9 @@
 import { useState } from "react";
 import type { Message } from "../pages/chatWindow";
-import { useGenerate } from "./useGenerate";
+import { useGenerateSinglePrompt } from "./useGenerateSinglePrompt";
 
 export const useSendMessage = () => {
- const { postPromt } = useGenerate();
+ const { postPromt } = useGenerateSinglePrompt();
 
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -30,7 +30,7 @@ export const useSendMessage = () => {
    const sendMessage = async (prompt:string) => {
     const trimmed = prompt.trim();
     if (!trimmed) return;
-    var rsta: string = (await postPromt(trimmed)) ?? "";
+    var rsta: string = await postPromt(trimmed);
     const newMsg: Message = {
       id: String(Date.now()),
       role: "user",
