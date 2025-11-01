@@ -11,16 +11,16 @@ class PromptService {
      }
    
      async sendPrompt(promt : string): Promise<any> {
+      const plainPrompt = `${promt}\n\nPor favor, responde solo en texto plano. No uses negritas, encabezados, tablas ni listas Markdown.`;
+
        const completion = await this.client.chat.completions.create({
          model: "openai/gpt-oss-120b:cerebras",
          messages: [
-           { role: "user", content: promt },
+           { role: "user", content: plainPrompt },
          ],
        });
-   
-       console.log();
        var rsta = completion.choices[0].message.content?.toString() || "nope";
-       return completion;
+       return rsta;
      }
 }
 
