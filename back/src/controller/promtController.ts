@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import PromptService from "../services/PromtService";
+import PromptService from "../services/promtService";
 
 class PromptController {
   constructor(private promptService: PromptService) {}

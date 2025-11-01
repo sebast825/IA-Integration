@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import "dotenv/config"; 
 
 class PromptService {
      private readonly client: OpenAI;
@@ -19,7 +20,6 @@ class PromptService {
    
        console.log();
        var rsta = completion.choices[0].message.content?.toString() || "nope";
-       //console.log("Respuesta: ", completion);
        return completion;
      }
 }

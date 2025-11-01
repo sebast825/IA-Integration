@@ -2,7 +2,7 @@
 
 
 import {Router } from 'express';
-import {promptService} from '../services/PromtService';
+import {promptService} from '../services/promtService';
 import PromptController from '../controller/promtController';
 
 
