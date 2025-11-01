@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import ChatService from "../services/ChatService";
-import "dotenv/config"; // 👈 forma corta y moderna
+import ChatService from "../services/chatService";
+
 
 class ChatController {
   constructor(private chatService: ChatService) {}

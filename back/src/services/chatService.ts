@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import { ChatMessage } from "../interfaces/chatMessage.types";
+import "dotenv/config"; 
 
 
 
