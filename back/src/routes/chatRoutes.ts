@@ -10,5 +10,6 @@ const router = Router();
 const chatController = new  ChatController(chatService);
 
 router.get('/chat', chatController.generateText);
+router.get('/generate', chatController.generateText);
 
 module.exports = router; 

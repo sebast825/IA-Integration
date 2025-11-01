@@ -10,17 +10,17 @@ class ChatService {
     });
   }
 
-  async callModel(): Promise<any> {
+  async callModel(promt : string): Promise<any> {
     const completion = await this.client.chat.completions.create({
       model: "openai/gpt-oss-120b:cerebras",
       messages: [
-        { role: "user", content: "redactamen un parrafo de cual quier cosa" },
+        { role: "user", content: promt },
       ],
     });
 
     console.log();
     var rsta = completion.choices[0].message.content?.toString() || "nope";
-    console.log("Respuesta: ", completion);
+    //console.log("Respuesta: ", completion);
     return completion;
   }
 }
