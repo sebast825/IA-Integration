@@ -9,6 +9,6 @@ import PromptController from '../controller/promtController';
 const router = Router();
 const promptController = new  PromptController(promptService);
 
-router.get('/generate', promptController.generateText);
+router.post('/generate', promptController.generateText);
 
 module.exports = router; 
