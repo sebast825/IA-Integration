@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
-import CallChatService from "../services/ChatService";
+import ChatService from "../services/ChatService";
+import "dotenv/config"; // 👈 forma corta y moderna
 
 class ChatController {
-  constructor(private callChatService: CallChatService) {}
+  constructor(private chatService: ChatService) {}
 
 
   generateText = async (req: Request, res: Response): Promise<void> => {
@@ -14,7 +15,7 @@ class ChatController {
       res.status(400).json({ status: "ERROR", error: "No message submited" });
     }
     try {
-      const responseMessage = await this.callChatService.callModel(prompt);
+      const responseMessage = await this.chatService.callModel(prompt);
       res.json({
         status: "OK",
         responseMessage,
