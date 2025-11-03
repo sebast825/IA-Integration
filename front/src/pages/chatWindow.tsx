@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 import { useSendMessage } from "../hooks/useSendMessage";
+import ReactMarkdown from "react-markdown";
 
 export default function ChatWindow() {
-  
   const { messages, isSending, sendMessage } = useSendMessage();
   const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement | null>(null);
@@ -44,8 +44,8 @@ export default function ChatWindow() {
                 className="p-2 shadow-sm rounded-3"
                 style={{ maxWidth: "75%" }}
               >
-                <Card.Text className="mb-1" style={{ whiteSpace: "pre-wrap" }}>
-                  {m.text}
+                <Card.Text className="mb-1 text-start" style={{ whiteSpace: "pre-wrap" }}>
+                  <ReactMarkdown>{m.text}</ReactMarkdown>
                 </Card.Text>
                 <small
                   className="text-muted d-block text-end"
