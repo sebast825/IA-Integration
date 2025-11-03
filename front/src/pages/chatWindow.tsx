@@ -4,13 +4,16 @@ import { useSendMessage } from "../hooks/useSendMessage";
 import ReactMarkdown from "react-markdown";
 import { useChatWithHistory } from "../hooks/useChatWithHistory";
 import { useGenerateSinglePrompt } from "../hooks/useGenerateSinglePrompt";
+import type { ChatTypes } from "../types/chatTypes.types";
 
-export default function ChatWindow() {
+export default function ChatWindow(props:{selectChatType : ChatTypes}) {
+    const { selectChatType } = props;
+
   const chatType ={
     "singlePrompt": useGenerateSinglePrompt,
     "chatWithHistory" : useChatWithHistory
   }
-    const { postPromt } = chatType["chatWithHistory"]();
+    const { postPromt } = chatType[selectChatType]();
 
   const { messages, isSending, sendMessage } = useSendMessage(postPromt);
   const [input, setInput] = useState("");
@@ -52,9 +55,9 @@ export default function ChatWindow() {
                 className="p-2 shadow-sm rounded-3"
                 style={{ maxWidth: "75%" }}
               >
-                <Card.Text className="mb-1 text-start" style={{ whiteSpace: "pre-wrap" }}>
-                  <ReactMarkdown>{m.text}</ReactMarkdown>
-                </Card.Text>
+                <div className="mb-1 text-start" style={{ whiteSpace: "pre-wrap" }}>
+                  <ReactMarkdown >{m.text}</ReactMarkdown>
+                </div>
                 <small
                   className="text-muted d-block text-end"
                   style={{ fontSize: "0.7rem" }}
