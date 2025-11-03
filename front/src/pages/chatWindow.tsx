@@ -2,9 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 import { useSendMessage } from "../hooks/useSendMessage";
 import ReactMarkdown from "react-markdown";
+import { useChatWithHistory } from "../hooks/useChatWithHistory";
+import { useGenerateSinglePrompt } from "../hooks/useGenerateSinglePrompt";
 
 export default function ChatWindow() {
-  const { messages, isSending, sendMessage } = useSendMessage();
+  const chatType ={
+    "singlePrompt": useGenerateSinglePrompt,
+    "chatWithHistory" : useChatWithHistory
+  }
+    const { postPromt } = chatType["chatWithHistory"]();
+
+  const { messages, isSending, sendMessage } = useSendMessage(postPromt);
   const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
