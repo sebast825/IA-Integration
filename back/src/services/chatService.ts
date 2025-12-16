@@ -1,75 +1,86 @@
-import OpenAI from "openai";
-import { ChatMessage } from "../interfaces/chatMessage.types";
-import "dotenv/config"; 
-
-
+import { GoogleGenAI, Content } from "@google/genai";
+import "dotenv/config";
 
 class ChatService {
-  private chatHistory: ChatMessage[] = [];
-  private readonly client: OpenAI;
-  private readonly historyLimit: number = 20;
+  private chatHistory: Content[] = [];
+  private readonly client: GoogleGenAI;
+  private readonly historyLimit: number;
 
-  constructor(private systemPrompt?: string) {
-    if (systemPrompt) {
-      this.chatHistory.push({ role: "system", content: systemPrompt });
-    }
-    this.client = new OpenAI({
-      baseURL: process.env.BASE_URL_AI,
-      apiKey: process.env.HF_TOKEN,
+  private systemPrompt: string | undefined;
+
+  constructor() {
+    this.systemPrompt = "Eres un asistente útil y creativo.";
+    const limitString = process.env.HISTORY_LIMIT || "20";
+    this.historyLimit = parseInt(limitString, 10);
+    console.log(this.historyLimit);
+    this.client = new GoogleGenAI({
+      apiKey: process.env.GEMINI_API_KEY,
     });
   }
+  async callModel(prompt: string): Promise<string> {
+    // 1. Add the user's message to the history
+    this.chatHistory.push({ role: "user", parts: [{ text: prompt }] });
 
-  async callModel(prompt: string): Promise<any> {
-    this.chatHistory.push({ role: "user", content: prompt });
+    try {
+      // 2. Execute the call, passing the entire history (including the new message)
+      const response = await this.client.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: this.chatHistory, // The conversation history
+        config: {
+          // The system context/role (not part of the history array)
+          systemInstruction: this.systemPrompt,
+        },
+      });
 
-    const completion = await this.client.chat.completions.create({
-      model: "openai/gpt-oss-120b:cerebras",
-      messages: this.chatHistory,
-    });
+      const assistantResponse = response.text || "Error no response";
 
-    const assistantResponse =
-      completion.choices[0].message.content?.toString() || "Error no response";
+      // 4. Add the assistant's response to the history
+      this.chatHistory.push({
+        role: "model", // Use 'model' role for the AI's response in Gemini
+        parts: [{ text: assistantResponse }],
+      });
+      // 5. Apply the history limit (Sliding Window Memory)
+      this.setHistoryLimit(this.historyLimit);
 
-    this.chatHistory.push({
-      role: "assistant",
-      content: assistantResponse,
-    });
+      return assistantResponse;
+    } catch (error) {
+      console.error("Error calling Gemini model:", error);
 
-    this.setHistoryLimit(this.historyLimit);
-
-    return completion;
-  }
-
-  getHistory(): ChatMessage[] {
-    return [...this.chatHistory];
-  }
-
-  clearHistory(): void {
-    this.chatHistory = [];
-    if (this.systemPrompt) {
-      this.chatHistory.push({ role: "system", content: this.systemPrompt });
+      return "Error calling Gemini model";
     }
   }
 
   // Sets a maximum limit for the chat history to prevent excessive token usage.
   setHistoryLimit(limit: number): void {
     if (this.chatHistory.length > limit) {
-      // Keep the system message and the most recent N messages
-      const systemMessage = this.chatHistory.find(
-        (msg) => msg.role === "system"
-      );
-      const recentMessages = this.chatHistory.slice(
-        -limit + (systemMessage ? 1 : 0)
-      );
-
-      this.chatHistory = systemMessage
-        ? [systemMessage, ...recentMessages]
-        : recentMessages;
+      const recentMessages = this.chatHistory.slice(-limit);
+      this.chatHistory = recentMessages;
     }
+  }
+
+  //if we implement multiple chats will use it in the future
+  clearHistory(): void {
+    this.chatHistory = [];
+  }
+  logChatInfo() {
+    console.log("--- Historial Detallado ---");
+    this.chatHistory.forEach((message, index) => {
+      // 1. Verify if there are parts (generally there is at least one)
+      if (message.parts && message.parts.length > 0) {
+        // 2. Access the first element of the 'parts' array
+
+        const textContent = message.parts[0].text;
+
+        console.log(`[${index}] ${message.role}: ${textContent}`);
+      } else {
+        console.log(
+          `[${index}] ${message.role}: (Sin contenido de texto visible)`
+        );
+      }
+    });
+    console.log("---------------------------");
   }
 }
 
 export default ChatService;
-export const chatService = new ChatService(
-  "Eres un asistente útil y creativo."
-);
+export const chatService = new ChatService();
