@@ -4,6 +4,7 @@ import ChatWindow from "./pages/chatWindow";
 import CardsGrid from "./pages/cardsGrid";
 import { useState } from "react";
 import type { ChatTypes } from "./types/chatTypes.types";
+import { NavBar } from "./components/navBar";
 
 function App() {
   const [showChat, setShowChat] = useState<Boolean>(false);
@@ -16,6 +17,11 @@ function App() {
   }
   return (
     <>
+      <NavBar
+        callBack={() => {
+          setShowChat(!showChat);
+        }}
+      ></NavBar>
       {showChat ? (
         <ChatWindow selectChatType={aiSelected}></ChatWindow>
       ) : (
