@@ -1,6 +1,5 @@
 import "dotenv/config";
 import { GoogleGenAI } from "@google/genai";
-import "dotenv/config"; 
 
 class PromptService {
   private readonly ai;
