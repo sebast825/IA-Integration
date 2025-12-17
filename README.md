@@ -1,7 +1,8 @@
 # AI Integration
 
 ## Description
-Scalable backend with multiple endpoints for AI service integration, specialized in Gemini-Flash. Supports two interaction modes: single-prompt and conversational chat with configurable history.
+Full-stack application featuring a scalable backend with multiple endpoints for AI service integration, specialized in Gemini-Flash, paired with an intuitive frontend interface. Supports two interaction modes: single-prompt and conversational chat with configurable history.
+
 
 ## Features
 - **Dual Mode API**: Separate endpoints for single-prompt and conversational chat
