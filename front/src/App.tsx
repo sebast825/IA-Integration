@@ -5,6 +5,7 @@ import CardsGrid from "./pages/cardsGrid";
 import { useState } from "react";
 import type { ChatTypes } from "./types/chatTypes.types";
 import { NavBar } from "./components/navBar";
+import { Container } from "react-bootstrap";
 
 function App() {
   const [showChat, setShowChat] = useState<Boolean>(false);
@@ -22,16 +23,20 @@ function App() {
           setShowChat(!showChat);
         }}
       ></NavBar>
+
       {showChat ? (
+        
         <ChatWindow selectChatType={aiSelected}></ChatWindow>
       ) : (
         <>
+
           <h1>Choose wich kind of chat you want to use!</h1>
           <CardsGrid
             getSelectedCardFn={(e: ChatTypes) => chatTypeIsSelected(e)}
           />
         </>
       )}
+ 
     </>
   );
 }

@@ -37,8 +37,8 @@ export default function ChatWindow(props:{selectChatType : ChatTypes}) {
   };
 
   return (
-    <Container fluid className="d-flex flex-column vh-100 vw-100 bg-light p-3">
-      <Row className="flex-grow-1 overflow-auto mb-3">
+    <Container fluid className="d-flex flex-column vh-100 vw-100 bg-light margin-top">
+      <Row className=" overflow-auto mb-3 h-100">
         <Col xs={12} md={{ span: 8, offset: 2 }}>
           {messages.map((m) => (
             <div
