@@ -25,11 +25,6 @@ Scalable backend with multiple endpoints for AI service integration, specialized
 - Configurable message limits
 - Customizable role context
 
-### Model Management
-`GET /models`
-- Available models listing
-- Service-specific configuration
-
 ## Chat Architecture
 
 ### Manual History Management
@@ -38,3 +33,24 @@ Scalable backend with multiple endpoints for AI service integration, specialized
 - **Intelligent filtering**: Automatic removal of non-essential messages
 - **Priority preservation**: Maintenance of key messages (system prompts, recent instructions)
 
+## Getting Started
+
+### Backend Setup
+1. Navigate to the backend directory
+2. Configure your environment:
+```bash
+  cd back
+  cp .env.example .env
+  # Edit .env with your Gemini API key and settings
+  npm install
+  npm run dev
+```
+
+### Frontend Setup
+1. Navigate to the frontend directory
+2. Install and run the development server:
+```bash
+  cd front
+  npm install
+  npm run dev
+```
