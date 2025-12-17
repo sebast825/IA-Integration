@@ -15,7 +15,7 @@ export const useGenerateSinglePrompt = () => {
       return response.data.responseMessage;
     } catch (error) {
       console.error("Promt failed:", error);
-      throw new Error("No response message");
+      return "We couldn´t process the request, try again later.";
     }
   };
 
