@@ -30,10 +30,11 @@ function App() {
       ) : (
         <>
 
-          <h1>Choose wich kind of chat you want to use!</h1>
+
           <CardsGrid
             getSelectedCardFn={(e: ChatTypes) => chatTypeIsSelected(e)}
           />
+      
         </>
       )}
  

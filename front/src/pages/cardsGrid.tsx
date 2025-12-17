@@ -2,16 +2,16 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 import type { ChatTypes } from "../types/chatTypes.types";
 
 interface cardsDataProps {
-  title : string,
-  text : string,
-  type : ChatTypes
+  title: string;
+  text: string;
+  type: ChatTypes;
 }
 
 interface CardsGridProps {
   getSelectedCardFn: (text: ChatTypes) => void;
 }
 const CardsGrid = ({ getSelectedCardFn }: CardsGridProps) => {
-  const cardsData : cardsDataProps[] = [
+  const cardsData: cardsDataProps[] = [
     {
       title: "Single Prompt",
       text: "Isolated questions without context. Perfect for quick searches and one-time tasks.",
@@ -26,17 +26,19 @@ const CardsGrid = ({ getSelectedCardFn }: CardsGridProps) => {
 
   return (
     <Container>
-      <Row className="flex justify-content-center">
+      <Row className="flex justify-content-center ">
+        <h1 className="">Choose Wich Kind Of Chat You Want To Use!</h1>
+
         {cardsData.map((card, index) => (
-          <Col key={index} md={4} className="mb-4">
+          <Col key={index} md={4} className=" m-3 mt-md-5 ">
             <Card
-              className="h-100"
+              className="h-100 mx-3"
               style={{ cursor: "pointer" }}
               onClick={() => getSelectedCardFn(card.type)}
             >
               <Card.Body>
-                <Card.Title>{card.title}</Card.Title>
-                <Card.Text>{card.text}</Card.Text>
+                <Card.Title className="fs-3">{card.title}</Card.Title>
+                <Card.Text className="fs-5">{card.text}</Card.Text>
               </Card.Body>
             </Card>
           </Col>
