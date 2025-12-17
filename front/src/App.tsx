@@ -1,11 +1,11 @@
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+//import "bootstrap/dist/css/bootstrap.min.css";
 import ChatWindow from "./pages/chatWindow";
 import CardsGrid from "./pages/cardsGrid";
 import { useState } from "react";
 import type { ChatTypes } from "./types/chatTypes.types";
 import { NavBar } from "./components/navBar";
-import { Container } from "react-bootstrap";
+import "bootswatch/dist/superhero/bootstrap.min.css"
 
 function App() {
   const [showChat, setShowChat] = useState<Boolean>(false);
