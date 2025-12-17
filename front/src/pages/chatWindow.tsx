@@ -47,7 +47,7 @@ export default function ChatWindow(props: { selectChatType: ChatTypes }) {
             <div className="h-100 d-flex align-items-center justify-content-center ">
               <div className="bg-primary p-4  rounded-3 ">
                 {" "}
-                <h2 className="text-light">How can I help you?</h2>
+                <h2 className="text-white">How can I help you?</h2>
               </div>
             </div>
           )}
@@ -74,7 +74,7 @@ export default function ChatWindow(props: { selectChatType: ChatTypes }) {
                 </div>
                 <small
                   className={` d-block text-end ${
-                    m.role === "user" ? "text-light" : "text-dark"
+                    m.role === "user" ? "text-white" : "text-dark"
                   }`}
                   style={{ fontSize: "0.7rem" }}
                 >
@@ -91,10 +91,11 @@ export default function ChatWindow(props: { selectChatType: ChatTypes }) {
         <Col xs={12} md={{ span: 8, offset: 2 }} className="d-flex gap-2">
           <Form.Control
             as="textarea"
+            className="border-primary"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Escribí un mensaje..."
+            placeholder="Write a message..."
             style={{ minHeight: "44px", maxHeight: "120px", resize: "none" }}
           />
           <Button
@@ -102,7 +103,7 @@ export default function ChatWindow(props: { selectChatType: ChatTypes }) {
             disabled={isSending || !input.trim()}
             onClick={handleSendMessage}
           >
-            {isSending ? "Enviando..." : "Enviar"}
+            {isSending ? "Senging..." : "Send"}
           </Button>
         </Col>
       </Row>

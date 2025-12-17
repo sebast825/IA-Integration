@@ -2,8 +2,9 @@ import { useState } from "react";
 import type { MessageRoles } from "../types/messageRoles.types";
 import type { Message } from "../types/message.types";
 
-export const useSendMessage = (postPromtFn :(prompt:string) => Promise<string>) => {
-
+export const useSendMessage = (
+  postPromtFn: (prompt: string) => Promise<string>
+) => {
   const [messages, setMessages] = useState<Message[]>([
    
   ]);
@@ -22,8 +23,8 @@ export const useSendMessage = (postPromtFn :(prompt:string) => Promise<string>) 
     setMessages((m) => [...m, newMsg]);
   };
   const handleAiCallAndResponse = async (text: string) => {
-    var rsta: string = await postPromtFn(text);
     setIsSending(true);
+    var rsta: string = await postPromtFn(text);
 
     setTimeout(() => {
       var reply: Message = newMessage(rsta, "assistant");
