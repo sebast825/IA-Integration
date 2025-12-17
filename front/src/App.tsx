@@ -20,7 +20,7 @@ function App() {
     <>
       <NavBar
         callBack={() => {
-          setShowChat(!showChat);
+          setShowChat(false);
         }}
       ></NavBar>
 
