@@ -6,18 +6,18 @@ class PromptService {
 
   constructor() {
     this.ai = new GoogleGenAI({
-        apiKey: process.env.GEMINI_API_KEY,
-
+      apiKey: process.env.GEMINI_API_KEY,
     });
   }
 
   async sendPrompt(promt: string): Promise<any> {
-    const systemInstruction = `nPor favor, responde solo en texto plano. No uses negritas, encabezados, tablas ni listas Markdown.`;
+    const systemInstruction = "Please respond in plain text only. Do not use bold, headers, tables, or Markdown lists. You are a helpful and creative assistant.";
 
     const response = await this.ai.models.generateContent({
       model: "gemini-2.5-flash",
       config: {
         systemInstruction: systemInstruction,
+        temperature: 1,
       },
       contents: promt,
     });

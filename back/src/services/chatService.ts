@@ -9,7 +9,7 @@ class ChatService {
   private systemPrompt: string | undefined;
 
   constructor() {
-    this.systemPrompt = "Eres un asistente útil y creativo.";
+    this.systemPrompt = "Please respond in plain text only. Do not use bold, headers, tables, or Markdown lists. You are a helpful and creative assistant."
     const limitString = process.env.HISTORY_LIMIT || "20";
     this.historyLimit = parseInt(limitString, 10);
     console.log(this.historyLimit);
@@ -29,6 +29,7 @@ class ChatService {
         config: {
           // The system context/role (not part of the history array)
           systemInstruction: this.systemPrompt,
+          temperature: 0.2,
         },
       });
 
