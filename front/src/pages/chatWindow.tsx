@@ -6,14 +6,14 @@ import { useChatWithHistory } from "../hooks/useChatWithHistory";
 import { useGenerateSinglePrompt } from "../hooks/useGenerateSinglePrompt";
 import type { ChatTypes } from "../types/chatTypes.types";
 
-export default function ChatWindow(props:{selectChatType : ChatTypes}) {
-    const { selectChatType } = props;
+export default function ChatWindow(props: { selectChatType: ChatTypes }) {
+  const { selectChatType } = props;
 
-  const chatType ={
-    "singlePrompt": useGenerateSinglePrompt,
-    "chatWithHistory" : useChatWithHistory
-  }
-    const { postPromt } = chatType[selectChatType]();
+  const chatType = {
+    singlePrompt: useGenerateSinglePrompt,
+    chatWithHistory: useChatWithHistory,
+  };
+  const { postPromt } = chatType[selectChatType]();
 
   const { messages, isSending, sendMessage } = useSendMessage(postPromt);
   const [input, setInput] = useState("");
@@ -37,7 +37,10 @@ export default function ChatWindow(props:{selectChatType : ChatTypes}) {
   };
 
   return (
-    <Container fluid className="d-flex flex-column vh-100 vw-100 bg-light margin-top">
+    <Container
+      fluid
+      className="d-flex flex-column vh-100 vw-100 bg-light margin-top"
+    >
       <Row className=" overflow-auto mb-3 h-100">
         <Col xs={12} md={{ span: 8, offset: 2 }}>
           {messages.map((m) => (
@@ -55,11 +58,16 @@ export default function ChatWindow(props:{selectChatType : ChatTypes}) {
                 className="p-2 shadow-sm rounded-3"
                 style={{ maxWidth: "75%" }}
               >
-                <div className="mb-1 text-start" style={{ whiteSpace: "pre-wrap" }}>
-                  <ReactMarkdown >{m.text}</ReactMarkdown>
+                <div
+                  className="mb-1 text-start"
+                  style={{ whiteSpace: "pre-wrap" }}
+                >
+                  <ReactMarkdown>{m.text}</ReactMarkdown>
                 </div>
                 <small
-                  className="text-muted d-block text-end"
+                  className={` d-block text-end ${
+                    m.role === "user" ? "text-light" : "text-dark"
+                  }`}
                   style={{ fontSize: "0.7rem" }}
                 >
                   {m.time}
