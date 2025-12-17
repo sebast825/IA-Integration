@@ -1,4 +1,4 @@
-import { Container, Row, Col, Card } from "react-bootstrap";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import type { ChatTypes } from "../types/chatTypes.types";
 
 interface cardsDataProps {
@@ -32,12 +32,13 @@ const CardsGrid = ({ getSelectedCardFn }: CardsGridProps) => {
         {cardsData.map((card, index) => (
           <Col key={index} md={4} className=" m-3 mt-md-5 ">
             <Card
-              className="h-100 mx-3"
+              className="h-100 mx-3 shadow-lg choice-card "
               style={{ cursor: "pointer" }}
               onClick={() => getSelectedCardFn(card.type)}
             >
               <Card.Body>
                 <Card.Title className="fs-3">{card.title}</Card.Title>
+                
                 <Card.Text className="fs-5">{card.text}</Card.Text>
               </Card.Body>
             </Card>
