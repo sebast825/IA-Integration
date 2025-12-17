@@ -103,7 +103,7 @@ export default function ChatWindow(props: { selectChatType: ChatTypes }) {
             disabled={isSending || !input.trim()}
             onClick={handleSendMessage}
           >
-            {isSending ? "Senging..." : "Send"}
+            {isSending ? "Sending..." : "Send"}
           </Button>
         </Col>
       </Row>
