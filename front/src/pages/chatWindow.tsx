@@ -43,6 +43,14 @@ export default function ChatWindow(props: { selectChatType: ChatTypes }) {
     >
       <Row className=" overflow-auto mb-3 h-100">
         <Col xs={12} md={{ span: 8, offset: 2 }}>
+          {messages.length == 0 && (
+            <div className="h-100 d-flex align-items-center justify-content-center ">
+              <div className="bg-primary p-4  rounded-3 ">
+                {" "}
+                <h2 className="text-light">How can I help you?</h2>
+              </div>
+            </div>
+          )}
           {messages.map((m) => (
             <div
               key={m.id}

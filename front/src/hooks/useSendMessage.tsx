@@ -5,24 +5,7 @@ import type { Message } from "../types/message.types";
 export const useSendMessage = (postPromtFn :(prompt:string) => Promise<string>) => {
 
   const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "1",
-      role: "assistant",
-      text: "Hola — ¿en qué puedo ayudarte hoy?",
-      time: "11:00",
-    },
-    {
-      id: "2",
-      role: "user",
-      text: "Quiero crear una app con Vite + React + TS",
-      time: "11:01",
-    },
-    {
-      id: "3",
-      role: "assistant",
-      text: "Perfecto. Te dejo los pasos básicos cuando quieras.",
-      time: "11:02",
-    },
+   
   ]);
   const [isSending, setIsSending] = useState(false);
 
